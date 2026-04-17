@@ -2,10 +2,15 @@ pipeline {
     agent any  
 
     tools {
-        maven 'Maven'  
+        maven 'Maven'
+    }
+
+    environment {
+        TOMCAT_WEBAPPS = '/opt/tomcat/webapps'
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Hemanth-bs/MyMavenWebApp.git'
@@ -24,11 +29,13 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to Tomcat') {
             steps {
-                sh 'mvn clean package'
+                sh '''
+                cp target/*.war $TOMCAT_WEBAPPS/
+                '''
             }
-        }    
+        }
     }
 
     post {
