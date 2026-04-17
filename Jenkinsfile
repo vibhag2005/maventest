@@ -29,11 +29,9 @@ pipeline {
             }
         }
 
-        stage('Deploy to Tomcat') {
+        stage('Deploy') {
             steps {
-                sh '''
-                cp target/*.war $TOMCAT_WEBAPPS/
-                '''
+                sh 'cp target/*.war $TOMCAT_WEBAPPS/'
             }
         }
     }
