@@ -1,39 +1,39 @@
 pipeline {
-    agent any  
+    agent any  // Use any available agent
 
     tools {
-        maven 'Maven'
+        maven 'Maven'  // Ensure this matches the name configured in Jenkins
     }
-
-    environment {
-        TOMCAT_WEBAPPS = '/opt/tomcat/webapps'
-    }
-
     stages {
-
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Hemanth-bs/MyMavenWebApp.git'
+                git branch: 'master', url: 'https://github.com/vibhag2005/maventest.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean package'  // Run Maven build
             }
         }
 
-        stage('Archive') {
+        stage('Test') {
             steps {
-                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
+                sh 'mvn test'  // Run unit tests
             }
         }
 
-        stage('Deploy') {
+        
+        
+       
+        stage('Run Application') {
             steps {
-                sh 'cp target/*.war $TOMCAT_WEBAPPS/'
+                // Start the JAR application
+                sh 'java -jar target/MyMavenApp-1.0-SNAPSHOT.jar'
             }
         }
+
+        
     }
 
     post {
