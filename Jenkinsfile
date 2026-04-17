@@ -4,11 +4,6 @@ pipeline {
     tools {
         maven 'maventest'  // Ensure this matches the name configured in Jenkins
     }
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'master', url: 'https://github.com/vibhag2005/maventest.git'
-            }
         }
 
         stage('Build') {
